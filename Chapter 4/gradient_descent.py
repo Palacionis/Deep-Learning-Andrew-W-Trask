@@ -79,9 +79,7 @@ input_ = 0.5
 for iteration in range(20):
     prediction = input_ * weight
     error = (prediction - goal_prediction) ** 2
-    direction_and_amount = (
-        prediction - goal_prediction
-    ) * input_  # pure error * input_
+    direction_and_amount = (prediction - goal_prediction) * input_  # pure error * input_
     weight -= direction_and_amount
 
     print(f"Error: {error} Prediction: {prediction} Weight: {weight}")
