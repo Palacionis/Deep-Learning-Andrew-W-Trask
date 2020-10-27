@@ -133,12 +133,56 @@ for iteration in range(4):
     weight_delta = delta * input_
     weight -= weight_delta
 
-    print(
-        f"Error: {error} Prediction: {pred} Weight: {weight} Weight Delta {weight_delta}"
-    )
+    print(f"Error: {error} Prediction: {pred} Weight: {weight} Weight Delta {weight_delta}")
 
 
 # Error: 0.64 Prediction: 0.0 Weight: 0.4 Weight Delta -0.4
 # Error: 0.36 Prediction: 0.2 Weight: 0.70 Weight Delta -0.30
 # Error: 0.202 Prediction: 0.35 Weight: 0.925 Weight Delta -0.225
 # Error: 0.113 Prediction: 0.4625 Weight: 1.09375 Weight Delta -0.16875
+
+
+# ------------------------------------------
+# using alpha in order not to overshoot the weight
+
+weight = 0
+goal_pred = 0.8
+input_ = 2 
+
+for iteration in range(4):
+    pred = input_ * weight
+    error = (pred - goal_pred) ** 2
+    delta = pred - goal_pred
+    weight_delta = delta * input_
+    weight -= weight_delta
+
+    print(f"Error: {error} Prediction: {pred} Weight: {weight} Weight Delta {weight_delta}")
+
+# As we can see, having input as 2 quickly diverges
+
+# Error: 0.64 Prediction: 0 Weight: 1.6 Weight Delta -1.6
+# Error: 5.760 Prediction: 3.2 Weight: -3.200 Weight Delta 4.8
+# Error: 51.84 Prediction: -6.4 Weight: 11.2 Weight Delta -14.400
+# Error: 466.5600 Prediction: 22.400 Weight: -32.0 Weight Delta 43.2
+
+# adding alpha
+
+weight = 0
+goal_pred = 0.8
+input_ = 2 
+alpha = 0.1
+
+for iteration in range(4):
+    pred = input_ * weight
+    error = (pred - goal_pred) ** 2
+    derivative = input_ * (pred - goal_pred)
+    weight -= (alpha * derivative)
+
+    print(f"Error: {error} Prediction: {pred} Weight: {weight} Derivative {derivative}")
+
+# by adding alpha parameter we fixed the divergence issue
+
+# Error: 0.64 Prediction: 0 Weight: 0.160 Derivative -1.6
+# Error: 0.23 Prediction: 0.320 Weight: 0.25= Derivative -0.96
+# Error: 0.082 Prediction: 0.512 Weight: 0.31 Derivative -0.57
+# Error: 0.02= Prediction: 0.6272 Weight: 0.34 Derivative -0.34
