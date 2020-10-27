@@ -21,9 +21,8 @@ goal_prediction = 0.8
 
 step_amount = 0.001  # how much to move each iteration
 
-for iteration in range(
-    1101
-):  # we know that it takes 1100 iterations to predict correctly
+# we know that it takes 1100 iterations to predict correctly
+for iteration in range(1101):
     prediction = weight * input_
     error = (prediction - goal_prediction) ** 2
 
