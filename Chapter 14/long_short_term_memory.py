@@ -607,7 +607,7 @@ print(generate_sample(n=3000, init_char='\n'))
 # If you want to see decent text that makes somewhat of sense you should let it train for more than
 # 100 iterations, unfortunately I did not had this much time
 
-# Below is the authors result after 71 iteration:
+# Below is the authors result after 71 iterations of training:
 
 # ------------------------------------------------
 
